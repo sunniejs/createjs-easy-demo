@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>creatJS Demo</title>
+  <meta name="viewport" content="width=device-width,target-densitydpi=device-dpi, user-scalcallbackle=0" />
+  <!--jquery-->
+  <script type="text/javascript" src="./assets/js/jquery-1.7.2.min.js"></script>
+  <!--cratejs easeljs-->
+  <script type="text/javascript" src="./assets/js/easeljs-0.8.2.min.js"></script>
+  <style>
+    * {
+      margin: 0
+    }
+  </style>
+</head>
+
+<body class="is-loading">
+  <!--<canvas id="canvas" style="width:100%" width="750" height="1200"></canvas>-->
+  <canvas id="canvas" style="width:100%" width="750"></canvas>
+  <script>
+    $(function () {
+      canvas = document.getElementById("canvas");
+      var stage = new createjs.Stage(canvas);
+      addImage("./assets/images/me.jpg", function (image) {
+        // 设置画布比例
+        canvas.height = canvas.width * image.height / image.width;
+        var bitmap = new createjs.Bitmap(image);
+       // 图片缩放
+        bitmap.scaleX = canvas.width / image.width;
+        bitmap.scaleY = canvas.height / image.height;
+        stage.addChild(bitmap);
+        stage.update();
+      })
+    })
+    // 加载图片
+    function addImage(path, callback) {
+      var img = new Image();
+      img.onload = function () {
+        if (callback) {
+          callback(img);
+        }
+      };
+      img.src = path;
+    }
+  </script>
+</body>
+
+</html>
