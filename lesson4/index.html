@@ -27,11 +27,42 @@
         // 设置画布比例
         canvas.height = canvas.width * image.height / image.width;
         var bitmap = new createjs.Bitmap(image);
-       // 图片缩放
+        // 图片缩放
         bitmap.scaleX = canvas.width / image.width;
         bitmap.scaleY = canvas.height / image.height;
         stage.addChild(bitmap);
         stage.update();
+
+        //添加名次
+        var myContainer = new createjs.Container();
+        var rankData = [{
+          rank: '第一:',
+          name: '花花花花花花花花'
+        }, {
+          rank: '第二二:',
+          name: '瓜瓜'
+        }, {
+          rank: '第三第三:',
+          name: '贝贝'
+        }]
+        var start = 0; // 起始位置
+        var distance = 50; // 间距
+        rankData.forEach(function (el) {
+          let text = new createjs.Text(el.rank, "bold 24px Arial", "#ff0018");
+          let text1 = new createjs.Text(el.name, "bold 24px Arial", "#282523");
+          let w = text.getBounds().width; //获取字体宽度
+          let w1 = text1.getBounds().width; //字体宽度
+          text.x = start; //设置rank位置
+          text1.x = start + w; //设置name位置0+text宽度
+          start += w + w1 + distance; //写完第一个后，设置start为字体本身宽度+距离
+          myContainer.addChild(text);//添加到容器里
+          myContainer.addChild(text1);//添加到容器里
+        }, this);
+        stage.addChild(myContainer);
+        //设置位置
+        myContainer.x = (canvas.width - start + distance) / 2; // 横向居中,总长度减去拼接字体长度/2
+        myContainer.y = canvas.height / 2; // 纵向居中
+        stage.update();//更新视图
       })
     })
     // 加载图片
